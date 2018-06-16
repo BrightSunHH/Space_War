@@ -1,4 +1,5 @@
 import pygame
+import os
 
 # colors
 black = (0, 0, 0)
@@ -10,23 +11,25 @@ yellow = (255, 255, 0)
 # colors
 
 # Load graphics
-img_mobship = pygame.image.load('mobship_1.png')
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, 'imgs')
+img_mobship = pygame.image.load(os.path.join(img_folder, 'one_eye.png'))
 
 
 class mob_ship(pygame.sprite.Sprite):
     def __init__(self, screen):
         super().__init__()
-        self.image = pygame.transform.scale(img_mobship, (40, 28))
+        self.image = pygame.transform.scale(img_mobship, (200, 150))
         self.screen = screen
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.width / 3)
         # pygame.draw.circle(self.image, red, self.rect.center, self.radius)
-        self.rect.x = self.screen.get_width() + 1000
-        self.rect.y = 500
-        self.speedx = -10
+        self.rect.x = self.screen.get_width() + 900
+        self.rect.y = 200
+        self.speedx = -5
         self.speedy = -10
-        self.full_hp = 100
-        self.hp = 100
+        self.full_hp = 2000
+        self.hp = 2000
 
     def AI_control_outside(self):
         self.rect.x += self.speedx
@@ -37,9 +40,9 @@ class mob_ship(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.right > self.screen.get_width():
-            self.speedx *= -1
-        if self.rect.left < self.screen.get_width() / 2:
-            self.speedx *= -1
+            self.speedx = -1
+        if self.rect.left < self.screen.get_width() / 2 + 200:
+            self.speedx = 0
         if self.rect.bottom > self.screen.get_height():
             self.speedy *= -1
         if self.rect.top < 0:

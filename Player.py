@@ -1,4 +1,5 @@
 import pygame
+import os
 
 # colors
 black = (0, 0, 0)
@@ -10,7 +11,9 @@ yellow = (255, 255, 0)
 # colors
 
 # Load graphics
-img_player = pygame.image.load('drone_1_blue.png')
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, 'imgs')
+img_player = pygame.image.load(os.path.join(img_folder, 'drone_1_blue.png'))
 
 
 class player_1(pygame.sprite.Sprite):
@@ -66,8 +69,8 @@ class player_1(pygame.sprite.Sprite):
                 self.rect.left = 0
             if self.rect.bottom > self.screen.get_height():
                 self.rect.bottom = self.screen.get_height()
-            if self.rect.top < 0:
-                self.rect.top = 0
+            if self.rect.top < 50:
+                self.rect.top = 50
 
     def hide(self):
         self.hidden = True

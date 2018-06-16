@@ -1,4 +1,5 @@
 import pygame
+import os
 
 # colors
 black = (0, 0, 0)
@@ -10,17 +11,19 @@ yellow = (255, 255, 0)
 # colors
 
 # Load graphics
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, 'imgs')
 explosion_anime = {}
-explosion_anime['rocks'] = []
-# explosion_anime['player'] = []
+explosion_anime['small'] = []
+explosion_anime['large'] = []
 
-# load graphics
 for i in range(0, 9):
     filename = 'regularExplosion0{}.png'.format(i)
-    img = pygame.image.load(filename)
+    img = pygame.image.load(os.path.join(img_folder, filename))
     img.set_colorkey(black)
-    # img_small = pygame.transform.scale(img, (32, 32))
-    explosion_anime['rocks'].append(img)
+    img_small = pygame.transform.scale(img, (32, 32))
+    explosion_anime['small'].append(img_small)
+    explosion_anime['large'].append(img)
 
 
 class explosion(pygame.sprite.Sprite):

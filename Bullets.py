@@ -1,4 +1,5 @@
 import pygame
+import os
 
 # colors
 black = (0, 0, 0)
@@ -9,8 +10,10 @@ blue = (0, 0, 255)
 # colors
 
 # Load graphics
-img_bullet = pygame.image.load('bullet7.png')
-img_bullet_2 = pygame.image.load('bullet5.png')
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, 'imgs')
+img_bullet = pygame.image.load(os.path.join(img_folder, 'bullet7.png'))
+img_bullet_2 = pygame.image.load(os.path.join(img_folder, 'bullet5.png'))
 
 
 class bullet_1(pygame.sprite.Sprite):
@@ -36,19 +39,19 @@ class bullet_2(pygame.sprite.Sprite):
     def __init__(self, screen, x, y):
         super().__init__()
         self.image = img_bullet_2
+        self.image = pygame.transform.scale(img_bullet_2, (70, 50))
         self.screen = screen
         # self.image.set_colorkey(black)
         self.rect = self.image.get_rect()
-        self.speedx = 7
-        self.speedy = 7
-        self.rect.bottom = y
-        self.rect.centerx = x
+        self.speedx = -12
+        self.speedy = -7
+        self.rect.x = x
+        self.rect.y = y
 
     def update(self):
+        self.speedx -= 5
         self.rect.x += self.speedx
-        self.rect.y += self.speedy
-        # kill if it moves off the top of game's screen
-        if self.rect.left < 0 or self.rect.right > self.screen.get_width():
+        if self.rect.right < 0 or self.rect.left > self.screen.get_width():
             self.kill()
-        if self.rect.bottom < 0 or self.rect.top > self.screen.get_height():
+        if self.rect.top > self.screen.get_height() or self.rect.bottom < 0:
             self.kill()
